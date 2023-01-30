@@ -89,7 +89,7 @@ function Table() {
             onChange={ (e) => setSelected({ ...selected, column: e.target.value }) }
           >
             {columns.map((column, index) => (
-              <option key={ index }>{column}</option>
+              <option key={ index + 1 }>{column}</option>
             ))}
             {/* <option id="population" defaultValue value="population">
               population
@@ -128,13 +128,12 @@ function Table() {
         <button type="button" data-testid="button-filter" onClick={ handleClick }>
           Filtrar
         </button>
-        {selectedFilters.map((filter) => (
-          <div key={ filter.comparison } data-testid="filter">
+        {selectedFilters.map((filter, index) => (
+          <div key={ index + 2 } data-testid="filter">
             <p>{filter.column}</p>
             <p>{filter.comparison}</p>
             <p>{filter.value}</p>
             <button
-              key={ filter.value }
               type="button"
               onClick={ () => {
                 setSelectedFilters(
@@ -177,8 +176,8 @@ function Table() {
         <tbody>
           {handleFilters()
             .filter(({ name }) => name.toUpperCase().includes(search.toUpperCase()))
-            .map((planet) => (
-              <TableComponents key={ planet } planet={ planet } />
+            .map((planet, index) => (
+              <TableComponents key={ index } planet={ planet } />
             ))}
         </tbody>
       </table>

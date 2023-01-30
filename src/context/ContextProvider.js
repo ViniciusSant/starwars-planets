@@ -10,7 +10,6 @@ function ContextProvider({ children }) {
     const getFetchPlanets = async () => {
       const allPlanets = await getPlanets();
       setPlanets(allPlanets);
-      console.log(allPlanets);
     };
     getFetchPlanets();
   }, [setPlanets]);
