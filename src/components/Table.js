@@ -12,20 +12,27 @@ function Table() {
     value: 0,
   });
   const [selectedFilters, setSelectedFilters] = useState([]);
+  /*   const [selectedColumn, setSelectedColumn] = useState([]); */
+  const [columns, setColumns] = useState([
+    'population',
+    'orbital_period',
+    'surface_water',
+    'diameter',
+    'rotation_period',
+  ]);
 
   const handleClick = () => {
     setSelectedFilters([...selectedFilters, selected]);
-    setSelected({
-      ...selected,
-      column: 'surface_water',
-    });
+    /* setSelectedColumn([...selectedColumn, selected.column]); */
+
+    const removeOpt = columns.filter((coluna) => coluna !== selected.column);
+    setColumns(removeOpt);
+    setSelected({ ...selected, column: removeOpt[1] });
   };
 
   const handleFilters = () => {
     const filteredName = planets
-      .filter(({ name }) => name.toUpperCase()
-        .includes(search.toUpperCase()));
-    console.log(selectedFilters);
+      .filter(({ name }) => name.toUpperCase().includes(search.toUpperCase()));
     const filteredNameConditions = filteredName.filter((planet) => {
       const filterResults = selectedFilters.map(
         ({ column, condition, value }) => {
@@ -46,7 +53,19 @@ function Table() {
     return filteredNameConditions;
   };
 
-  console.log(planets);
+  /* verificar se algum elemento do array de colunas já foi selecionado, se sim filtra todos menos ele */
+
+  /* const handleColumn = () => {
+    const colunasNãoSelecionadas = selectedColumn.map((coluna) => {
+      if(columns.includes(coluna)){
+        setColumns.filter((colunaa) => colunaa !== coluna)
+      }
+      return colunasNãoSelecionadas
+    }}
+  useEffect(() => {
+    console.log(handleColumn());
+  }, selectedFilters); */
+
   return (
     <>
       <div>
@@ -69,13 +88,16 @@ function Table() {
             value={ selected.column }
             onChange={ (e) => setSelected({ ...selected, column: e.target.value }) }
           >
-            <option id="population" defaultValue value="population">
+            {columns.map((column, index) => (
+              <option key={ index }>{column}</option>
+            ))}
+            {/* <option id="population" defaultValue value="population">
               population
             </option>
             <option id="orbital_period">orbital_period</option>
             <option id="diameter">diameter</option>
             <option id="rotation_period">rotation_period</option>
-            <option id="surface_water">surface_water</option>
+            <option id="surface_water">surface_water</option> */}
           </select>
         </label>
         <label htmlFor="condition">
@@ -107,12 +129,12 @@ function Table() {
           Filtrar
         </button>
         {selectedFilters.map((filter) => (
-          <div key={ filter.column } data-testid="filter">
+          <div key={ filter.comparison } data-testid="filter">
             <p>{filter.column}</p>
             <p>{filter.comparison}</p>
             <p>{filter.value}</p>
             <button
-              key={ filter.column }
+              key={ filter.value }
               type="button"
               onClick={ () => {
                 setSelectedFilters(
