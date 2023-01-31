@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 function TableComponents({ planet }) {
   return (
-    <tr>
+    <tr data-testid="planet-row">
       <td>{planet.name}</td>
       <td>{planet.rotation_period}</td>
       <td>{planet.orbital_period}</td>

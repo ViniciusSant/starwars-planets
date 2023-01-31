@@ -31,8 +31,8 @@ function Table() {
   };
 
   const handleFilters = () => {
-    const filteredName = planets
-      .filter(({ name }) => name.toUpperCase().includes(search.toUpperCase()));
+    const filteredName = planets.filter(({ name }) => name
+      .toUpperCase().includes(search.toUpperCase()));
     const filteredNameConditions = filteredName.filter((planet) => {
       const filterResults = selectedFilters.map(
         ({ column, condition, value }) => {
@@ -177,7 +177,10 @@ function Table() {
           {handleFilters()
             .filter(({ name }) => name.toUpperCase().includes(search.toUpperCase()))
             .map((planet, index) => (
-              <TableComponents key={ index } planet={ planet } />
+              <TableComponents
+                key={ index }
+                planet={ planet }
+              />
             ))}
         </tbody>
       </table>
